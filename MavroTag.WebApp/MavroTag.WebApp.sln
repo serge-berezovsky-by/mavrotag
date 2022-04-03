@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MavroTag.WebApp", "MavroTag.WebApp\MavroTag.WebApp.csproj", "{A40D5CEF-81E7-4662-B9D1-29037BD7B4A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A40D5CEF-81E7-4662-B9D1-29037BD7B4A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A40D5CEF-81E7-4662-B9D1-29037BD7B4A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A40D5CEF-81E7-4662-B9D1-29037BD7B4A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A40D5CEF-81E7-4662-B9D1-29037BD7B4A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {79EEEEE2-5562-4E67-8935-357714D0360E}
+	EndGlobalSection
+EndGlobal
