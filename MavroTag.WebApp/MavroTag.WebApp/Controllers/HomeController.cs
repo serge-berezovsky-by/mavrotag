@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MavroTag.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,12 +9,16 @@ namespace MavroPedia.WebApp.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController()
+        private IUserService _userService;
+
+        public HomeController(IUserService userService)
         {
+            _userService = userService;
         }
 
         public ActionResult Index()
         {
+            var users = _userService.GetAll().ToList();
             return View();
         }
 

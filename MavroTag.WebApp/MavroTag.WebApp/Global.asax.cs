@@ -1,6 +1,9 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using log4net;
+using MavroTag.Core.Data;
+using MavroTag.Core.Repositories;
+using MavroTag.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -24,7 +27,7 @@ namespace MavroTag.WebApp
 
             InitializeAutofac();
 
-            //Database.SetInitializer(new MavroPediaDbInitializer());
+            Database.SetInitializer(new MavroTagDbInitializer());
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -36,16 +39,16 @@ namespace MavroTag.WebApp
         {
             var builder = new ContainerBuilder();
 
-            //builder.RegisterType(typeof(MavroPediaDbContext))
-            //    .AsImplementedInterfaces();
+            builder.RegisterType(typeof(MavroTagDbContext))
+                .AsImplementedInterfaces();
 
-            //builder.RegisterAssemblyTypes(typeof(UserRepository).Assembly)
-            //    .Where(c => c.Name.EndsWith("Repository"))
-            //    .AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof(UserRepository).Assembly)
+                .Where(c => c.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces();
 
-            //builder.RegisterAssemblyTypes(typeof(UserService).Assembly)
-            //    .Where(c => c.Name.EndsWith("Service"))
-            //    .AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof(UserService).Assembly)
+                .Where(c => c.Name.EndsWith("Service"))
+                .AsImplementedInterfaces();
 
             // Register your MVC controllers. (MvcApplication is the name of
             // the class in Global.asax.)
