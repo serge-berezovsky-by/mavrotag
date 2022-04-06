@@ -179,6 +179,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\NotFound.cshtml" />
+    <Content Include="Views\Home\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

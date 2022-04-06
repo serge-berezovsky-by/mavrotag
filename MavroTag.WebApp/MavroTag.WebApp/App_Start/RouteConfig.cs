@@ -20,6 +20,12 @@ namespace MavroTag.WebApp
             );
 
             routes.MapRoute(
+                name: "Update",
+                url: "update",
+                defaults: new { controller = "Home", action = "Update", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

@@ -1,4 +1,5 @@
-﻿using MavroTag.Core.Interfaces;
+﻿using MavroTag.Core.Data;
+using MavroTag.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace MavroPedia.WebApp.Controllers
     public class HomeController : BaseController
     {
         private IUserService _userService;
+        private IPermissionService _permissionService;
 
-        public HomeController(IUserService userService)
+        public HomeController(IUserService userService, IPermissionService permissionService)
         {
             _userService = userService;
+            _permissionService = permissionService;
         }
 
         public ActionResult Index()
@@ -34,6 +37,13 @@ namespace MavroPedia.WebApp.Controllers
 
         public ActionResult NotFound()
         {
+            return View();
+        }
+
+        public ActionResult Update()
+        {
+            var databaseHelper = new DatabaseHelper(_userService, _permissionService);
+            databaseHelper.AddAdministratorPermissions();
             return View();
         }
     }

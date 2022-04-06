@@ -1,5 +1,8 @@
 ﻿namespace MavroTag.Core.Migrations
 {
+    using MavroTag.Core.Data;
+    using MavroTag.Core.Enums;
+    using MavroTag.Core.Helper;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -12,7 +15,7 @@
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(MavroTag.Core.Data.MavroTagDbContext context)
+        protected override void Seed(MavroTagDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -21,7 +24,7 @@
 
             context.Users.AddOrUpdate(c => c.Name, new Domain.User()
             {
-                Name = "Administrator",
+                Name = Strings.AdministratorName,
                 Passphrase = "D35C178F-E027-431B-AB84-2119032BCB1B",
             });
         }

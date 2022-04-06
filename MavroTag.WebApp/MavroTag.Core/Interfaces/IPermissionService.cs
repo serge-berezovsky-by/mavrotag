@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace MavroTag.Core.Interfaces
 {
-    public interface IUserService
-    {
-        IEnumerable<User> GetAll();
-        User GetByName(string name);
-        void Update(User user);
-    }
+	public interface IPermissionService
+	{
+		Permission Add(Permission permission);
+		IEnumerable<Permission> GetAll();
+		Permission GetById(long id);
+	}
 }

@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace MavroTag.Core.Domain
 {
-	public class User : BaseEntity
+	public class Permission : BaseEntity
 	{
 		public string Name { get; set; }
-		public string Passphrase { get; set; }
-		public ICollection<Permission> Permissions { get; set; }
+		public ICollection<User> Users { get; set; }
 
-		public User()
+		public Permission()
 		{
-			Permissions = new HashSet<Permission>();
+			Users = new HashSet<User>();
 		}
 	}
 }
