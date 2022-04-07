@@ -1,12 +1,13 @@
 ﻿using MavroTag.Core.Data;
 using MavroTag.Core.Interfaces;
+using MavroTag.WebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MavroPedia.WebApp.Controllers
+namespace MavroTag.WebApp.Controllers
 {
     public class HomeController : BaseController
     {
@@ -45,6 +46,10 @@ namespace MavroPedia.WebApp.Controllers
             var databaseHelper = new DatabaseHelper(_userService, _permissionService);
             databaseHelper.AddAdministratorPermissions();
             return View();
+        }
+        public ActionResult Login(string returnUrl)
+        {
+            return View(new LoginModel());
         }
     }
 }

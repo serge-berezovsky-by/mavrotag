@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MavroPedia.WebApp.Controllers
+namespace MavroTag.WebApp.Controllers
 {
     public class BaseController : Controller
     {
