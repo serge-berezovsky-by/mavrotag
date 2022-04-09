@@ -33,5 +33,11 @@ namespace MavroTag.Core.Services
         {
             _userRepository.Update(user);
         }
+
+        public User Login(string passphrase)
+        {
+            var user = _userRepository.GetAll().FirstOrDefault(c => c.Passphrase == passphrase);
+            return user != null ? GetByName(user.Name) : null;
+        }
     }
 }

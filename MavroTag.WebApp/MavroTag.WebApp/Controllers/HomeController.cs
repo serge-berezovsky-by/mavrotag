@@ -1,5 +1,6 @@
 ﻿using MavroTag.Core.Data;
 using MavroTag.Core.Interfaces;
+using MavroTag.WebApp.Helpers;
 using MavroTag.WebApp.Models;
 using System;
 using System.Collections.Generic;
@@ -47,9 +48,55 @@ namespace MavroTag.WebApp.Controllers
             databaseHelper.AddAdministratorPermissions();
             return View();
         }
+
         public ActionResult Login(string returnUrl)
         {
             return View(new LoginModel());
+        }
+
+        private void ValidateLogin(LoginModel model)
+        {
+            if (string.IsNullOrEmpty(model.Passphrase)) throw new Exception("Passphrase is required");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginModel model, string returnUrl = "")
+        {
+            try
+            {
+                ValidateLogin(model);
+
+                var user = _userService.Login(model.Passphrase);
+                if (user == null) throw new Exception("Доступ закрыт.");
+
+                AuthHelper.Login(user);
+
+                if (Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Office", "Home");
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Login", e);
+                return View("Login", new LoginModel() { Error = e.Message });
+            }
+        }
+
+        public ActionResult Logout()
+        {
+            AuthHelper.Logout();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Office()
+        {
+            return View();
         }
     }
 }

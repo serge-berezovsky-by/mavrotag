@@ -4,29 +4,36 @@
 @{
     ViewBag.Title = "Вход — MavroTag";
 }
+
 <div>
-    <h3>@ViewBag.Title</h3>
-    <br />
-    <div id="" class="">
-        @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { id = "loginForm" }))
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-group">
-                @Html.HiddenFor(c => c.ReturnUrl)
-                <div id="error" class="alert alert-danger" role="alert" style="display: none;">@Model.Error</div>
-                <label for="Passphrase">Введите код</label>
-                @Html.TextBoxFor(c => c.Passphrase, new { @class = "form-control" })
-                <br />
-                <div class="d-flex align-items-center">
-                    <button type="button" id="loginButton" class="btn btn-primary">
-                        <span id="loading1" class="spinner-border spinner-border-sm"></span>
-                        Войти
-                    </button>
-                </div>
+    <p></p>
+
+    <p class="h5">Вход — MavroTag</p>
+
+    <p></p>
+
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { id = "loginForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.HiddenFor(c => c.ReturnUrl)
+            <div id="error" class="alert alert-danger" role="alert" style="display: none;">@Model.Error</div>
+            <label for="Passphrase">Введите код</label>
+            @Html.PasswordFor(c => c.Passphrase, new { @class = "form-control" })
+            <br />
+            <div class="d-flex align-items-center">
+                <button type="button" id="loginButton" class="btn btn-primary">
+                    <span id="loading1" class="spinner-border spinner-border-sm"></span>
+                    Войти
+                </button>
             </div>
-        }
-    </div>
+        </div>
+    }
+
+    <p></p>
+
 </div>
+
 <script>
 	$(function () {
 
@@ -35,10 +42,6 @@
         $("#loading1").hide();
 
         $("#Passphrase").focus();
-
-		$("#Passphrase").change(function (e) {
-			validatePassphrase();
-		});
 
 		$("#Passphrase").on("keypress", function (e) {
 			if (event.keyCode === 13) {
