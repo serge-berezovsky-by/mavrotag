@@ -27,11 +27,8 @@ namespace MavroTag.Core.Data
 
             foreach (var permissionValue in Enum.GetValues(typeof(Permissions)).Cast<Permissions>())
             {
-                var newPermission = new Permission()
-                {
-                    Name = $"{permissionValue}"
-                };
-                if (!permissions.Select(c => c.Name).Contains(newPermission.Name))
+                var newPermission = Permission.FromEnum(permissionValue);
+                if (permissions.FirstOrDefault(c => newPermission.Is(c)) == null)
                 {
                     _permissionService.Add(newPermission);
                 }

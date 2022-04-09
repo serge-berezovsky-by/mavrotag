@@ -1,4 +1,5 @@
 ﻿using MavroTag.Core.Domain;
+using MavroTag.Core.Enums;
 using MavroTag.Core.Interfaces;
 using System;
 using System.Collections.Concurrent;
@@ -17,6 +18,8 @@ namespace MavroTag.WebApp.Helpers
         public static bool IsAuthenticated => HttpContext.Current?.User?.Identity?.IsAuthenticated == true;
 
         public static string Name => GetUser()?.Name;
+
+        public static bool IsViewUsersPermission => GetUser()?.HasPermission(Permissions.ViewUsers) == true;
 
         public static void Login(User user)
         {
@@ -39,6 +42,18 @@ namespace MavroTag.WebApp.Helpers
         public static void Logout()
         {
             FormsAuthentication.SignOut();
+        }
+
+        public static void Check(Permissions permissionValue)
+        {
+            if( GetUser()?.HasPermission(permissionValue) == true)
+            {
+            }
+            else
+            {
+                AuthHelper.Logout();
+                HttpContext.Current.Response.Redirect("/", endResponse: true);
+            }
         }
     }
 }

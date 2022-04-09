@@ -1,4 +1,5 @@
 ﻿using MavroTag.Core.Domain;
+using MavroTag.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,18 @@ namespace MavroTag.Core.Domain
 		{
 			Users = new HashSet<User>();
 		}
-	}
+
+        public static Permission FromEnum(Permissions permissionValue)
+        {
+            return new Permission()
+            {
+                Name = $"{permissionValue}"
+            };
+        }
+
+        public bool Is(Permission permission)
+        {
+            return this.Name == permission.Name;
+        }
+    }
 }

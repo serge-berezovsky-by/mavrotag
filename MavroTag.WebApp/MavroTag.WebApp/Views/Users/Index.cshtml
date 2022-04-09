@@ -1,0 +1,35 @@
+﻿@model MavroTag.WebApp.Models.UsersModel
+
+@{
+    ViewBag.Title = "Кабинет — MavroTag";
+}
+
+<div>
+
+    <p></p>
+
+    <p class="h5">Управление пользователями</p>
+
+    <p></p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Имя</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userModel in Model.Users)
+            {
+                <tr>
+                    <th scope="row">@userModel.User.Id</th>
+                    <td>@userModel.User.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p></p>
+
+</div>

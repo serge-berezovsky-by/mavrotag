@@ -11,8 +11,6 @@ namespace MavroTag.Core.Enums
         ViewUsers,
         AddUser,
         EditUser,
-        DeleteUser,
-        AddTagProject,
-        AddTagProjectUser
+        DeleteUser
     }
 }
