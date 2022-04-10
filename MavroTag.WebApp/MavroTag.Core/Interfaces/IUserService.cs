@@ -13,5 +13,7 @@ namespace MavroTag.Core.Interfaces
         User GetByName(string name);
         void Update(User user);
         User Login(string passphrase);
+        User Add(User user);
+        User GetById(long id);
     }
 }

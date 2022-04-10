@@ -24,6 +24,12 @@ namespace MavroTag.Core.Services
             return _userRepository.GetAll().Include(c => c.Permissions).AsEnumerable();
         }
 
+        public User GetById(long id)
+        {
+            var user = _userRepository.GetAll().FirstOrDefault(c => c.Id == id);
+            return user != null ? GetByName(user.Name) : null;
+        }
+
         public User GetByName(string name)
         {
             return _userRepository.GetAll().Include(c => c.Permissions).FirstOrDefault(c => string.Compare(c.Name, name, true) == 0);
@@ -32,6 +38,11 @@ namespace MavroTag.Core.Services
         public void Update(User user)
         {
             _userRepository.Update(user);
+        }
+
+        public User Add(User user)
+        {
+            return _userRepository.Insert(user);
         }
 
         public User Login(string passphrase)

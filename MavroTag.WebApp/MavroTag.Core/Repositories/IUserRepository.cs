@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MavroTag.Core.Repositories
 {
-	public interface IUserRepository : IRepository<User>
-	{
-	}
+    public interface IUserRepository : IRepository<User>
+    {
+    }
 }

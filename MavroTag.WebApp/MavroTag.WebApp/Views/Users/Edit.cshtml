@@ -1,0 +1,74 @@
+﻿@using MavroTag.WebApp.Helpers
+@model MavroTag.WebApp.Models.UserModel
+
+@{
+    ViewBag.Title = "Редактирование пользователямя";
+}
+
+<div>
+
+    <p></p>
+
+    <p class="h5">Редактирование пользователя</p>
+
+    <p></p>
+
+    @using (Html.BeginForm("Save", "Users", FormMethod.Post, new { id = "editUserForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.HiddenFor(c => c.Id)
+            <div id="success" class="alert alert-success" role="alert" style="display: none;">@Model.Success</div>
+            <div id="error" class="alert alert-danger" role="alert" style="display: none;">@Model.Error</div>
+            <label for="Name">Введите имя</label>
+            @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+            <label for="Passphrase">Введите код</label>
+            @Html.PasswordFor(c => c.Passphrase, new { @class = "form-control", @value = Model.Passphrase })
+            <br />
+            <div class="d-flex align-items-center">
+                <button type="button" id="saveUserButton" class="btn btn-primary">
+                    <span id="loading1" class="spinner-border spinner-border-sm"></span>
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    }
+    <p></p>
+
+</div>
+
+<script>
+	$(function () {
+
+        if ("@Model.Success") $("#success").show(); else $("#success").hide();
+		if ("@Model.Error") $("#error").show(); else $("#error").hide();
+
+        $("#loading1").hide();
+
+        $("#Name").focus();
+
+		$("#saveUserButton").click(function (e) {
+			onSaveUserButtonClick(e)
+		});
+	});
+
+	function validateName() {
+		return validateRequired("#Name", "Введите имя.");
+	}
+
+	function validatePassphrase() {
+		return validateRequired("#Passphrase", "Введите код.");
+	}
+
+	function validateSaveUserForm() {
+		if (!validateName()) return false;
+		if (!validatePassphrase()) return false;
+		return true;
+	}
+
+	function onSaveUserButtonClick(e) {
+		if (!validateSaveUserForm()) return false;
+		$("#loading1").show();
+		$("#editUserForm").submit();
+	}
+</script>

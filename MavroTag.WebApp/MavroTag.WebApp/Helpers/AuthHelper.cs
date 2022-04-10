@@ -18,8 +18,10 @@ namespace MavroTag.WebApp.Helpers
         public static bool IsAuthenticated => HttpContext.Current?.User?.Identity?.IsAuthenticated == true;
 
         public static string Name => GetUser()?.Name;
-
+        
         public static bool IsViewUsersPermission => GetUser()?.HasPermission(Permissions.ViewUsers) == true;
+
+        public static bool IsAddUserPermission => GetUser()?.HasPermission(Permissions.AddUser) == true;
 
         public static void Login(User user)
         {

@@ -1,7 +1,8 @@
-﻿@model MavroTag.WebApp.Models.UsersModel
+﻿@using MavroTag.WebApp.Helpers
+@model MavroTag.WebApp.Models.UsersModel
 
 @{
-    ViewBag.Title = "Кабинет";
+    ViewBag.Title = "Управление пользователями";
 }
 
 <div>
@@ -9,6 +10,13 @@
     <p></p>
 
     <p class="h5">Управление пользователями</p>
+
+    <p></p>
+
+    @if (AuthHelper.IsAddUserPermission)
+    {
+        <p><a class="btn-link" href="@Url.Action("Add", "Users")">Добавить пользователя</a></p>
+    }
 
     <p></p>
 
@@ -23,8 +31,8 @@
             @foreach (var userModel in Model.Users)
             {
                 <tr>
-                    <th scope="row">@userModel.User.Id</th>
-                    <td>@userModel.User.Name</td>
+                    <th scope="row">@userModel.Id</th>
+                    <td>@userModel.Name</td>
                 </tr>
             }
         </tbody>
