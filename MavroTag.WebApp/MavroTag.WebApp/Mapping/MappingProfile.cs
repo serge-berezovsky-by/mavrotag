@@ -8,12 +8,15 @@ using System.Web;
 
 namespace MavroTag.WebApp.Mapping
 {
-    public class MappingProfile :Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
-            CreateMap<User, UserModel>();
-            CreateMap<UserModel, User>();
+            CreateMap<User, UserModel>()
+                .ForMember(c => c.Permissions, c => c.Ignore());
+
+            CreateMap<UserModel, User>()
+                .ForMember(c => c.Permissions, c => c.Ignore());
         }
     }
 }

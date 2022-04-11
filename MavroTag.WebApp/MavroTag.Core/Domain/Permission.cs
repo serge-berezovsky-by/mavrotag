@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace MavroTag.Core.Domain
 {
-	public class Permission : BaseEntity
-	{
-		public string Name { get; set; }
-		public ICollection<User> Users { get; set; }
+    public class Permission : BaseEntity
+    {
+        public string Name { get; set; }
+        public ICollection<User> Users { get; set; }
 
-		public Permission()
-		{
-			Users = new HashSet<User>();
-		}
+        public Permission()
+        {
+            Users = new HashSet<User>();
+        }
 
         public static Permission FromEnum(Permissions permissionValue)
         {
@@ -24,6 +24,18 @@ namespace MavroTag.Core.Domain
             {
                 Name = $"{permissionValue}"
             };
+        }
+
+        public static Permission FromString(string stringValue)
+        {
+            if (Enum.TryParse<Permissions>(stringValue, out var permissionValue))
+            {
+                return FromEnum(permissionValue);
+            }
+            else
+            {
+                throw new Exception($"Incorrect permission value {stringValue}");
+            }
         }
 
         public bool Is(Permission permission)

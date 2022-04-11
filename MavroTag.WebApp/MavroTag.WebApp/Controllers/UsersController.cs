@@ -31,7 +31,7 @@ namespace MavroTag.WebApp.Controllers
             var users = _userService.GetAll().ToList();
             var model = new UsersModel()
             {
-                Users = Mapper.Map<IEnumerable<User>, IEnumerable<UserModel>>(users).ToList()
+                Users = users.Select(c=>UserModel.FromUser(c)).ToList()
             };
 
             return View(model);
@@ -49,7 +49,7 @@ namespace MavroTag.WebApp.Controllers
                 Permissions = new List<Permission>()
             };
 
-            var model = Mapper.Map<User, UserModel>(user);
+            var model = UserModel.FromUser(user);
 
             return View("Edit", model);
         }
@@ -65,9 +65,9 @@ namespace MavroTag.WebApp.Controllers
 
                 if ( model.Id == 0)
                 {
-                    var user = Mapper.Map<UserModel, User>(model);
+                    var user = UserModel.ToUser(model);
                     user = _userService.Add(user);
-                    model = Mapper.Map<User, UserModel>(user);
+                    model = UserModel.FromUser(user);
                     model.Success = "Пользователь добавлен.";
                 }
                 else

@@ -5,25 +5,36 @@
     ViewBag.Title = "Редактирование пользователямя";
 }
 
-<div>
+    <div>
 
-    <p></p>
+        <p></p>
 
-    <p class="h5">Редактирование пользователя</p>
+        <p class="h5">Редактирование пользователя</p>
 
-    <p></p>
+        <p></p>
 
-    @using (Html.BeginForm("Save", "Users", FormMethod.Post, new { id = "editUserForm" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="form-group">
-            @Html.HiddenFor(c => c.Id)
-            <div id="success" class="alert alert-success" role="alert" style="display: none;">@Model.Success</div>
-            <div id="error" class="alert alert-danger" role="alert" style="display: none;">@Model.Error</div>
-            <label for="Name">Введите имя</label>
-            @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
-            <label for="Passphrase">Введите код</label>
-            @Html.PasswordFor(c => c.Passphrase, new { @class = "form-control", @value = Model.Passphrase })
+        @using (Html.BeginForm("Save", "Users", FormMethod.Post, new { id = "editUserForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.HiddenFor(c => c.Id)
+                <div id="success" class="alert alert-success" role="alert" style="display: none;">@Model.Success</div>
+                <div id="error" class="alert alert-danger" role="alert" style="display: none;">@Model.Error</div>
+                <label for="Name">Введите имя</label>
+                @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+                <br />
+                <label for="Passphrase">Введите код</label>
+                @Html.PasswordFor(c => c.Passphrase, new { @class = "form-control", @value = Model.Passphrase })
+            </div>
+            <br />
+            foreach (var permissionValue in Model.Permissions.Keys)
+            {
+
+                <div class="form-check">
+                    @Html.CheckBoxFor(c => Model.Permissions[permissionValue], new { @class = "form-check-input" })
+                    <label class="form-check-label" for="Permissions_@(permissionValue)_">@Model.PermissionNames[permissionValue]</label>
+                </div>
+            }
             <br />
             <div class="d-flex align-items-center">
                 <button type="button" id="saveUserButton" class="btn btn-primary">
@@ -31,11 +42,10 @@
                     Сохранить
                 </button>
             </div>
-        </div>
-    }
-    <p></p>
+        }
+        <p></p>
 
-</div>
+    </div>
 
 <script>
 	$(function () {
