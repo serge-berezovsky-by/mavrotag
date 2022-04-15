@@ -31,8 +31,9 @@
             {
 
                 <div class="form-check">
-                    @Html.CheckBoxFor(c => Model.Permissions[permissionValue], new { @class = "form-check-input" })
+                    @Html.CheckBoxFor(c => c.Permissions[permissionValue], new { @class = "form-check-input" })
                     <label class="form-check-label" for="Permissions_@(permissionValue)_">@Model.PermissionNames[permissionValue]</label>
+                    @Html.HiddenFor(c => c.PermissionNames[permissionValue])
                 </div>
             }
             <br />

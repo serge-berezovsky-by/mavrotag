@@ -65,14 +65,18 @@ namespace MavroTag.WebApp.Controllers
 
                 if ( model.Id == 0)
                 {
-                    var user = UserModel.ToUser(model);
+                    var user = UserModel.ToUser(model, null);
                     user = _userService.Add(user);
                     model = UserModel.FromUser(user);
                     model.Success = "Пользователь добавлен.";
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    var user = _userService.GetById(model.Id);
+                    user = UserModel.ToUser(model, user);
+                    _userService.Update(user);
+                    user = _userService.GetById(model.Id);
+                    model = UserModel.FromUser(user);
                     model.Success = "Пользователь сохранён.";
                 }
 

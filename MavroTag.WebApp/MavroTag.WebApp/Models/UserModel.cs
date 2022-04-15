@@ -35,9 +35,9 @@ namespace MavroTag.WebApp.Models
             return userModel;
         }
 
-        public static User ToUser(UserModel model)
+        public static User ToUser(UserModel model, User user)
         {
-            var user = Mapper.Map<UserModel, User>(model);
+            user = user != null ? Mapper.Map<UserModel, User>(model, user) : Mapper.Map<UserModel, User>(model);
             user.Permissions = DependencyResolver.Current.GetService<IPermissionService>().GetAll()
                 .Where(c => model.Permissions.Where(d => d.Value).Any(d => c.Is(Permission.FromString(d.Key))))
                 .ToList();
