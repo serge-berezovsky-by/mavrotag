@@ -16,7 +16,8 @@ namespace MavroTag.WebApp.Mapping
                 .ForMember(c => c.Permissions, c => c.Ignore());
 
             CreateMap<UserModel, User>()
-                .ForMember(c => c.Permissions, c => c.Ignore());
+                .ForMember(c => c.Permissions, c => c.Ignore())
+                .ForMember(c => c.AddedDateTime, c => c.Ignore());
         }
     }
 }

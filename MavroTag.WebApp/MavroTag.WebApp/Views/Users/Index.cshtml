@@ -25,14 +25,31 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Имя</th>
+                <th scope="col">Описание</th>
+                <th scope="col">Регистрация</th>
+                <th scope="col">Активен</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var userModel in Model.Users)
+            @for (var index = 0; index < Model.Users.Count; index++)
             {
                 <tr>
-                    <th scope="row">@userModel.Id</th>
-                    <td>@userModel.Name</td>
+                    <th scope="row">@Model.Users[index].Id</th>
+                    <td>@Model.Users[index].Name</td>
+                    <td>@Model.Users[index].Description</td>
+                    <td>@Model.Users[index].AddedDateTime.ToShortDateString() @Model.Users[index].AddedDateTime.ToShortTimeString()</td>
+                    <td>@Html.CheckBoxFor(c => Model.Users[index].IsEnabled, new { onclick = "return false;" })</td>
+                    <td>
+                        @if (AuthHelper.IsEditUserPermission)
+                        {
+                            <a class="btn-link" href="@Url.Action("Edit", "Users", new { id = Model.Users[index].Id })">Редактировать</a>
+                        }
+                        @if (AuthHelper.IsDeleteUserPermission)
+                        {
+                            <a class="btn-link" href="@Url.Action("Delete", "Users", new { id = Model.Users[index].Id })">Удалить</a>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>

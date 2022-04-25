@@ -12,8 +12,9 @@ namespace MavroTag.Core.Interfaces
         IEnumerable<User> GetAll();
         User GetByName(string name);
         void Update(User user);
-        User Login(string passphrase);
+        User Login(string name, string passphrase);
         User Add(User user);
         User GetById(long id);
+        void Delete(long id);
     }
 }

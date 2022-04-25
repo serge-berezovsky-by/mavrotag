@@ -14,6 +14,9 @@ namespace MavroTag.WebApp.Models
         public long Id { get; set; }
         public string Name { get; set; }
         public string Passphrase { get; set; }
+        public string Description { get; set; }
+        public DateTime AddedDateTime { get; set; }
+        public bool IsEnabled { get; set; }
         public Dictionary<string, bool> Permissions { get; set; }
         public Dictionary<string, string> PermissionNames { get; set; }
 

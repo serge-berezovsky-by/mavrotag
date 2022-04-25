@@ -26,6 +26,8 @@
             {
                 Name = Strings.AdministratorName,
                 Passphrase = "D35C178F-E027-431B-AB84-2119032BCB1B",
+                AddedDateTime = DateTime.Now.ToUniversalTime(),
+                IsEnabled = true
             });
         }
     }

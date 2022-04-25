@@ -23,6 +23,10 @@ namespace MavroTag.WebApp.Helpers
 
         public static bool IsAddUserPermission => GetUser()?.HasPermission(Permissions.AddUser) == true;
 
+        public static bool IsEditUserPermission => GetUser()?.HasPermission(Permissions.EditUser) == true;
+
+        public static bool IsDeleteUserPermission => GetUser()?.HasPermission(Permissions.DeleteUser) == true;
+
         public static void Login(User user)
         {
             FormsAuthentication.SetAuthCookie(user.Name, false);
@@ -53,9 +57,14 @@ namespace MavroTag.WebApp.Helpers
             }
             else
             {
-                AuthHelper.Logout();
-                HttpContext.Current.Response.Redirect("/", endResponse: true);
+                AuthHelper.LogoutAndRedirect();
             }
+        }
+
+        public static void LogoutAndRedirect()
+        {
+            AuthHelper.Logout();
+            HttpContext.Current.Response.Redirect("/", endResponse: true);
         }
     }
 }

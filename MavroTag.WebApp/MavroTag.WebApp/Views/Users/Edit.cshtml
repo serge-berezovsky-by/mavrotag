@@ -27,6 +27,14 @@
                 @Html.PasswordFor(c => c.Passphrase, new { @class = "form-control", @value = Model.Passphrase })
             </div>
             <br />
+            <label for="Description">Введите описание</label>
+            @Html.TextBoxFor(c => c.Description, new { @class = "form-control" })
+            <br />
+            <div class="form-check">
+                @Html.CheckBoxFor(c => c.IsEnabled, new { @class = "form-check-input" })
+                <label class="form-check-label" for="IsEnabled">Активен</label>
+            </div>
+            <br />
             foreach (var permissionValue in Model.Permissions.Keys)
             {
 

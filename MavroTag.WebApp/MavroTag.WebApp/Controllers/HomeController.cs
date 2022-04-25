@@ -56,7 +56,8 @@ namespace MavroTag.WebApp.Controllers
 
         private void ValidateLogin(LoginModel model)
         {
-            if (string.IsNullOrEmpty(model.Passphrase)) throw new Exception("Passphrase is required");
+            if (string.IsNullOrEmpty(model.Name)) throw new Exception("Введите имя.");
+            if (string.IsNullOrEmpty(model.Passphrase)) throw new Exception("Введите пароль.");
         }
 
         [HttpPost]
@@ -67,7 +68,7 @@ namespace MavroTag.WebApp.Controllers
             {
                 ValidateLogin(model);
 
-                var user = _userService.Login(model.Passphrase);
+                var user = _userService.Login(model.Name, model.Passphrase);
                 if (user == null) throw new Exception("Доступ закрыт.");
 
                 AuthHelper.Login(user);

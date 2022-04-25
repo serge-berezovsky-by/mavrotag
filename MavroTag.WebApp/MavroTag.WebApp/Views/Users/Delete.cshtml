@@ -1,0 +1,29 @@
+﻿@using MavroTag.WebApp.Helpers
+@model MavroTag.WebApp.Models.UserModel
+
+@{
+    ViewBag.Title = "Удаление пользователя";
+}
+
+<div>
+
+    <p></p>
+
+    <p class="h5">Удаление пользователя</p>
+
+    <p></p>
+
+    <div id="success" class="alert alert-success" role="alert" style="display: none;">@Model.Success</div>
+    <div id="error" class="alert alert-danger" role="alert" style="display: none;">@Model.Error</div>
+
+    <p></p>
+
+</div>
+
+<script>
+	$(function () {
+
+        if ("@Model.Success") $("#success").show(); else $("#success").hide();
+		if ("@Model.Error") $("#error").show(); else $("#error").hide();
+	});
+</script>

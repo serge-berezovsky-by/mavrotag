@@ -31,7 +31,7 @@ namespace MavroTag.WebApp.Controllers
             var users = _userService.GetAll().ToList();
             var model = new UsersModel()
             {
-                Users = users.Select(c=>UserModel.FromUser(c)).ToList()
+                Users = users.Select(c => UserModel.FromUser(c)).ToList()
             };
 
             return View(model);
@@ -46,8 +46,23 @@ namespace MavroTag.WebApp.Controllers
                 Id = 0,
                 Name = string.Empty,
                 Passphrase = Guid.NewGuid().ToString().ToUpper(),
+                Description = string.Empty,
+                IsEnabled = true,
                 Permissions = new List<Permission>()
             };
+
+            var model = UserModel.FromUser(user);
+
+            return View("Edit", model);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            AuthHelper.Check(Permissions.EditUser);
+
+            var user = _userService.GetById(id);
+
+            if (user == null) AuthHelper.LogoutAndRedirect();
 
             var model = UserModel.FromUser(user);
 
@@ -63,9 +78,10 @@ namespace MavroTag.WebApp.Controllers
                 ValidateUserModel(model);
                 ModelState.Clear();
 
-                if ( model.Id == 0)
+                if (model.Id == 0)
                 {
                     var user = UserModel.ToUser(model, null);
+                    user.AddedDateTime = DateTime.Now.ToUniversalTime();
                     user = _userService.Add(user);
                     model = UserModel.FromUser(user);
                     model.Success = "Пользователь добавлен.";
@@ -84,9 +100,37 @@ namespace MavroTag.WebApp.Controllers
             }
             catch (Exception e)
             {
-                _logger.Error("SaveUser", e);
+                _logger.Error("Save", e);
                 model.Error = e.Message;
                 return View("Edit", model);
+            }
+        }
+
+        public ActionResult Delete(int id)
+        {
+            AuthHelper.Check(Permissions.DeleteUser);
+
+            UserModel model = null;
+
+            try
+            {
+                var user = _userService.GetById(id);
+                model = UserModel.FromUser(user);
+
+                if (user.IsAdministrator) throw new Exception("Нельзя удалить администратора.");
+                if (string.Compare(AuthHelper.Name, model.Name, ignoreCase: true) == 0) throw new Exception("Нельзя удалить самого себя.");
+
+                _userService.Delete(id);
+
+                model.Success = $"Пользователь {model.Name} удалён";
+
+                return View("Delete", model);
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Delete", e);
+                model.Error = e.Message;
+                return View("Delete", model);
             }
         }
 
@@ -106,7 +150,6 @@ namespace MavroTag.WebApp.Controllers
 
             var users = _userService.GetAll();
             if (users.Any(c => string.Compare(c.Name, model.Name, ignoreCase: true) == 0 && c.Id != model.Id)) throw new Exception("Имя занято.");
-            if (users.Any(c => string.Compare(c.Passphrase, model.Passphrase, ignoreCase: true) == 0 && c.Id != model.Id)) throw new Exception("Код занят.");
         }
     }
 }

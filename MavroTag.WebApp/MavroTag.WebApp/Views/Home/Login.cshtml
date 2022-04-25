@@ -18,8 +18,11 @@
         <div class="form-group">
             @Html.HiddenFor(c => c.ReturnUrl)
             <div id="error" class="alert alert-danger" role="alert" style="display: none;">@Model.Error</div>
-            <label for="Passphrase">Введите код</label>
-            @Html.PasswordFor(c => c.Passphrase, new { @class = "form-control" })
+            <label for="Name">Введите имя</label>
+            @Html.TextBoxFor(c => c.Name, new { @class = "form-control enter-control" })
+            <br />
+            <label for="Passphrase">Введите пароль</label>
+            @Html.PasswordFor(c => c.Passphrase, new { @class = "form-control enter-control" })
             <br />
             <div class="d-flex align-items-center">
                 <button type="button" id="loginButton" class="btn btn-primary">
@@ -41,9 +44,9 @@
 
         $("#loading1").hide();
 
-        $("#Passphrase").focus();
+        $("#Name").focus();
 
-		$("#Passphrase").on("keypress", function (e) {
+		$(".enter-control").on("keypress", function (e) {
 			if (event.keyCode === 13) {
 				if (!onLoginButtonClick(e)) return false;
 			}
@@ -54,11 +57,16 @@
 		});
 	});
 
+	function validateName() {
+		return validateRequired("#Name", "Введите имя.");
+	}
+
 	function validatePassphrase() {
-		return validateRequired("#Passphrase", "Введите код.");
+		return validateRequired("#Passphrase", "Введите пароль.");
 	}
 
 	function validateLoginForm() {
+		if (!validateName()) return false;
 		if (!validatePassphrase()) return false;
 		return true;
 	}

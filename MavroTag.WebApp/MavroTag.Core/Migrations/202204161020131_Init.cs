@@ -14,6 +14,9 @@
                         Id = c.Long(nullable: false, identity: true),
                         Name = c.String(),
                         Passphrase = c.String(),
+                        Description = c.String(),
+                        AddedDateTime = c.DateTime(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

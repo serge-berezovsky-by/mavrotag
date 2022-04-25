@@ -45,10 +45,15 @@ namespace MavroTag.Core.Services
             return _userRepository.Insert(user);
         }
 
-        public User Login(string passphrase)
+        public User Login(string name, string passphrase)
         {
-            var user = _userRepository.GetAll().FirstOrDefault(c => c.Passphrase == passphrase);
+            var user = _userRepository.GetAll().FirstOrDefault(c => c.Name == name && c.Passphrase == passphrase && c.IsEnabled);
             return user != null ? GetByName(user.Name) : null;
+        }
+
+        public void Delete(long id)
+        {
+            _userRepository.Delete(id);
         }
     }
 }

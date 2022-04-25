@@ -71,9 +71,9 @@
     <Compile Include="Interfaces\IPermissionService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Data\Configuration.cs" />
-    <Compile Include="Migrations\202204061841478_Init.cs" />
-    <Compile Include="Migrations\202204061841478_Init.designer.cs">
-      <DependentUpon>202204061841478_Init.cs</DependentUpon>
+    <Compile Include="Migrations\202204161020131_Init.cs" />
+    <Compile Include="Migrations\202204161020131_Init.designer.cs">
+      <DependentUpon>202204161020131_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
@@ -91,8 +91,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202204061841478_Init.resx">
-      <DependentUpon>202204061841478_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202204161020131_Init.resx">
+      <DependentUpon>202204161020131_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

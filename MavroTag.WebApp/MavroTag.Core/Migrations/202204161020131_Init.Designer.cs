@@ -13,7 +13,7 @@ namespace MavroTag.Core.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202204061841478_Init"; }
+            get { return "202204161020131_Init"; }
         }
         
         string IMigrationMetadata.Source
