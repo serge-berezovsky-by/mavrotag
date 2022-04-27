@@ -1,0 +1,45 @@
+﻿@using MavroTag.WebApp.Helpers
+@model MavroTag.WebApp.Models.TagProjectsModel
+
+@{
+    ViewBag.Title = "Tag-проекты";
+}
+
+<div>
+
+    <p></p>
+
+    <p class="h5">Мои Tag-проекты</p>
+
+    <p></p>
+
+    @if (AuthHelper.IsMyTagProjectsPermission)
+    {
+        <p><a class="btn-link" href="@Url.Action("Add", "TagProjects")">Добавить Tag-проект</a></p>
+    }
+
+    <p></p>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Имя</th>
+                <th scope="col">Описание</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var index = 0; index < Model.TagProjects.Count; index++)
+            {
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    <p></p>
+
+</div>
