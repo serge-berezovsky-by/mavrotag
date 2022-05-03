@@ -1,0 +1,70 @@
+﻿@using MavroTag.WebApp.Helpers
+@model MavroTag.WebApp.Models.TagProjectModel
+
+@{
+    ViewBag.Title = "Редактирование Tag-проекта";
+}
+
+<div>
+
+    <p></p>
+
+    <p class="h5">Редактирование Tag-проекта</p>
+
+    <p></p>
+
+    @using (Html.BeginForm("Save", "TagProjects", FormMethod.Post, new { id = "editTagProjectForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.HiddenFor(c => c.Id)
+            <div id="success" class="alert alert-success" role="alert" style="display: none;">@Model.Success</div>
+            <div id="error" class="alert alert-danger" role="alert" style="display: none;">@Model.Error</div>
+            <label for="Name">Введите имя</label>
+            @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+            <br />
+            <label for="Description">Введите описание</label>
+            @Html.TextBoxFor(c => c.Description, new { @class = "form-control" })
+        </div>
+        <br />
+        <div class="d-flex align-items-center">
+            <button type="button" id="saveTagProjectButton" class="btn btn-primary">
+                <span id="loading1" class="spinner-border spinner-border-sm"></span>
+                Сохранить
+            </button>
+        </div>
+    }
+    <p></p>
+
+</div>
+
+<script>
+	$(function () {
+
+        if ("@Model.Success") $("#success").show(); else $("#success").hide();
+		if ("@Model.Error") $("#error").show(); else $("#error").hide();
+
+        $("#loading1").hide();
+
+        $("#Name").focus();
+
+        $("#saveTagProjectButton").click(function (e) {
+			onSaveTagProjectButtonClick(e)
+		});
+	});
+
+	function validateName() {
+		return validateRequired("#Name", "Введите имя.");
+	}
+
+    function validateSaveTagProjectForm() {
+		if (!validateName()) return false;
+		return true;
+	}
+
+    function onSaveTagProjectButtonClick(e) {
+        if (!validateSaveTagProjectForm()) return false;
+		$("#loading1").show();
+        $("#editTagProjectForm").submit();
+	}
+</script>

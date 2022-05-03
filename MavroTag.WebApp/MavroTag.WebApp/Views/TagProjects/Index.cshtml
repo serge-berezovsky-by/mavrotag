@@ -23,6 +23,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Имя</th>
                 <th scope="col">Описание</th>
                 <th scope="col"></th>
@@ -31,11 +32,15 @@
         <tbody>
             @for (var index = 0; index < Model.TagProjects.Count; index++)
             {
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+                <tr>
+                    <td>@Model.TagProjects[index].Id</td>
+                    <td>@Model.TagProjects[index].Name</td>
+                    <td>@Model.TagProjects[index].Description</td>
+                    <td>
+                        <a class="btn-link" href="@Url.Action("Edit", "TagProjects", new { id = Model.TagProjects[index].Id })">Редактировать</a>
+                        <a class="btn-link delete" href="@Url.Action("Delete", "TagProjects", new { id = Model.TagProjects[index].Id })">Удалить</a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
@@ -43,3 +48,13 @@
     <p></p>
 
 </div>
+
+<script>
+    $(function () {
+        $(".delete").click(function (event) {
+            if (!confirm("Удалить Tag-проект?")) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>

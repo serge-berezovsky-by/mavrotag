@@ -65,24 +65,33 @@
     <Compile Include="Data\MavroTagDbInitializer.cs" />
     <Compile Include="Domain\BaseEntity.cs" />
     <Compile Include="Domain\Permission.cs" />
+    <Compile Include="Domain\TagProject.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Enums\Permissions.cs" />
     <Compile Include="Helper\Strings.cs" />
     <Compile Include="Interfaces\IPermissionService.cs" />
+    <Compile Include="Interfaces\ITagProjectService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Data\Configuration.cs" />
     <Compile Include="Migrations\202204161020131_Init.cs" />
     <Compile Include="Migrations\202204161020131_Init.designer.cs">
       <DependentUpon>202204161020131_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202205021027488_TagProject.cs" />
+    <Compile Include="Migrations\202205021027488_TagProject.designer.cs">
+      <DependentUpon>202205021027488_TagProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\IPermissionRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\ITagProjectRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\PermissionRepository.cs" />
+    <Compile Include="Repositories\TagProjectRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\PermissionService.cs" />
+    <Compile Include="Services\TagProjectService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +102,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202204161020131_Init.resx">
       <DependentUpon>202204161020131_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205021027488_TagProject.resx">
+      <DependentUpon>202205021027488_TagProject.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -47,7 +47,7 @@
                         }
                         @if (AuthHelper.IsDeleteUserPermission)
                         {
-                            <a class="btn-link" href="@Url.Action("Delete", "Users", new { id = Model.Users[index].Id })">Удалить</a>
+                            <a class="btn-link delete" href="@Url.Action("Delete", "Users", new { id = Model.Users[index].Id })">Удалить</a>
                         }
                     </td>
                 </tr>
@@ -58,3 +58,13 @@
     <p></p>
 
 </div>
+
+<script>
+    $(function () {
+        $(".delete").click(function (event) {
+            if (!confirm("Удалить пользователя?")) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>

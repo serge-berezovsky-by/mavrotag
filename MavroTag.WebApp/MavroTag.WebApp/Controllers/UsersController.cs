@@ -110,7 +110,7 @@ namespace MavroTag.WebApp.Controllers
         {
             AuthHelper.Check(Permissions.DeleteUser);
 
-            UserModel model = null;
+            var model = new UserModel();
 
             try
             {

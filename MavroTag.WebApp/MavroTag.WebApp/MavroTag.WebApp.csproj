@@ -204,6 +204,8 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\TagProjects\Index.cshtml" />
+    <Content Include="Views\TagProjects\Edit.cshtml" />
+    <Content Include="Views\TagProjects\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
