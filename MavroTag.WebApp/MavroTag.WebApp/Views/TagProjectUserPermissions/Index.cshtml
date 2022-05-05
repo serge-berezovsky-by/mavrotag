@@ -1,0 +1,56 @@
+﻿@using MavroTag.WebApp.Helpers
+@model MavroTag.WebApp.Models.TagProjectUserPermissionsModel
+
+@{
+    ViewBag.Title = "Пользователи Tag-проекта";
+}
+
+<div>
+
+    <p></p>
+
+    <p class="h5">Пользователи Tag-проекта <a class="btn-link" href="@Url.Action("Edit", "TagProjects", new { id = Model.TagProjectId })">@Model.TagProjectName</a></p>
+
+    <p></p>
+
+    <p><a class="btn-link" href="@Url.Action("Add", "TagProjectUserPermissions", new { tagProjectId = Model.TagProjectId })">Добавить пользователя Tag-проекта</a></p>
+
+    <p></p>
+    @Html.HiddenFor(c => c.TagProjectId)
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Имя</th>
+                <th scope="col">Полномочия</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var index = 0; index < Model.TagProjectUserPermissions.Count; index++)
+            {
+                <tr>
+                    <td>@Model.TagProjectUserPermissions[index].UserName</td>
+                    <td>@(string.Join(" ", Model.TagProjectUserPermissions[index].PermissionNames.Keys))</td>
+                    <td>
+                        <a class="btn-link" href="@Url.Action("Edit", "TagProjectUserPermissions", new { tagProjectId = Model.TagProjectId, userId = Model.TagProjectUserPermissions[index].UserId })">Редактировать</a>
+                        <a class="btn-link delete" href="@Url.Action("Delete", "TagProjectUserPermissions", new { tagProjectId = Model.TagProjectId, userId = Model.TagProjectUserPermissions[index].UserId })">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p></p>
+
+</div>
+
+<script>
+    $(function () {
+        $(".delete").click(function (event) {
+            if (!confirm("Удалить Tag-проект?")) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>

@@ -38,6 +38,7 @@
                     <td>@Model.TagProjects[index].Description</td>
                     <td>
                         <a class="btn-link" href="@Url.Action("Edit", "TagProjects", new { id = Model.TagProjects[index].Id })">Редактировать</a>
+                        <a class="btn-link" href="@Url.Action("Index", "TagProjectUserPermissions", new { tagProjectId = Model.TagProjects[index].Id })">Пользователи</a>
                         <a class="btn-link delete" href="@Url.Action("Delete", "TagProjects", new { id = Model.TagProjects[index].Id })">Удалить</a>
                     </td>
                 </tr>

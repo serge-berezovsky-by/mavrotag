@@ -23,6 +23,8 @@ namespace MavroTag.Core.Data
 
 		public DbSet<Domain.TagProject> TagProjects { get; set; }
 
+		public DbSet<Domain.TagProjectUserPermission> TagProjectUserPermissions { get; set; }
+
 		public new DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
 		{
 			return base.Set<TEntity>();
