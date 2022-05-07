@@ -24,20 +24,24 @@ namespace MavroTag.Core.Services
             return _tagProjectUserPermissionRepository.GetAll().Include(c => c.User).AsEnumerable();
         }
 
-        public TagProjectUserPermission GetById(long id)
+        public void Update(long tagProjectId, long userId, IEnumerable<string> permissions)
         {
-            var tagProjectUserPermission = _tagProjectUserPermissionRepository.GetAll().FirstOrDefault(c => c.Id == id);
-            return tagProjectUserPermission;
-        }
-
-        public TagProjectUserPermission Add(TagProjectUserPermission tagProjectUserPermission)
-        {
-            return _tagProjectUserPermissionRepository.Insert(tagProjectUserPermission);
-        }
-
-        public void Delete(long id)
-        {
-            _tagProjectUserPermissionRepository.Delete(id);
+            var tagProjectUserPermissions = _tagProjectUserPermissionRepository.GetAll().Where(c => c.TagProjectId == tagProjectId && c.UserId == userId);
+            foreach(var tagProjectUserPermission in tagProjectUserPermissions.ToList())
+            {
+                _tagProjectUserPermissionRepository.Delete(tagProjectUserPermission.Id);
+            }
+            foreach(var permission in permissions.ToList())
+            {
+                var tagProjectUserPermission = new TagProjectUserPermission()
+                {
+                    AddedDateTime = DateTime.Now,
+                    TagProjectId = tagProjectId,
+                    UserId = userId,
+                    Permission = permission
+                };
+                _tagProjectUserPermissionRepository.Insert(tagProjectUserPermission);
+            }
         }
     }
 }

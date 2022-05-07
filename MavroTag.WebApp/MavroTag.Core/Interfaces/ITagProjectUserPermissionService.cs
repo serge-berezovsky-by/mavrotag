@@ -10,8 +10,6 @@ namespace MavroTag.Core.Interfaces
     public interface ITagProjectUserPermissionService
     {
         IEnumerable<TagProjectUserPermission> GetAll();
-        TagProjectUserPermission Add(TagProjectUserPermission tagProjectUserPermission);
-        TagProjectUserPermission GetById(long id);
-        void Delete(long id);
+        void Update(long tagProjectId, long userId, IEnumerable<string> permissions);
     }
 }

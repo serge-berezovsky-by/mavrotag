@@ -6,12 +6,14 @@ using System.Linq;
 
 namespace MavroTag.WebApp.Models
 {
-    public class TagProjectUserPermissionModel
+    public class TagProjectUserPermissionModel : BaseModel
     {
+        public long TagProjectId { get; set; }
         public long UserId { get; set; }
         public string UserName { get; set; }
         public Dictionary<string, bool> Permissions { get; set; }
         public Dictionary<string, string> PermissionNames { get; set; }
+        public IEnumerable<string> SelectedPermissions => Permissions.Where(c => c.Value == true).Select(c => c.Key);
 
         public static TagProjectUserPermissionModel FromTagProjectUserPermissions(User user, IEnumerable<TagProjectUserPermission> tagProjectUserPermissions)
         {

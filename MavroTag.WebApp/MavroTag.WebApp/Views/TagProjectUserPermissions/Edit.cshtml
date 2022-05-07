@@ -1,0 +1,79 @@
+﻿@using MavroTag.WebApp.Helpers
+@model MavroTag.WebApp.Models.TagProjectUserPermissionModel
+
+@{
+    ViewBag.Title = "Редактирование пользователя Tag-проекта";
+}
+
+<div>
+
+    <p></p>
+
+    <p class="h5">Редактирование пользователя Tag-проекта</p>
+
+    <p></p>
+
+    @using (Html.BeginForm("Save", "TagProjectUserPermissions", FormMethod.Post, new { id = "editTagProjectUserPermissionForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.HiddenFor(c => c.TagProjectId)
+            @Html.HiddenFor(c => c.UserId)
+            <div id="success" class="alert alert-success" role="alert" style="display: none;">@Model.Success</div>
+            <div id="error" class="alert alert-danger" role="alert" style="display: none;">@Model.Error</div>
+            <label for="UserName">Введите имя пользователя</label>
+            @Html.TextBoxFor(c => c.UserName, new { @class = "form-control" })
+        </div>
+        <br />
+        foreach (var permissionValue in Model.Permissions.Keys)
+        {
+
+            <div class="form-check">
+                @Html.CheckBoxFor(c => c.Permissions[permissionValue], new { @class = "form-check-input" })
+                <label class="form-check-label" for="Permissions_@(permissionValue)_">@Model.PermissionNames[permissionValue]</label>
+                @Html.HiddenFor(c => c.PermissionNames[permissionValue])
+            </div>
+        }
+        <br />
+        <div class="d-flex align-items-center">
+            <button type="button" id="saveTagProjectUserPermissionButton" class="btn btn-primary">
+                <span id="loading1" class="spinner-border spinner-border-sm"></span>
+                Сохранить
+            </button>
+        </div>
+    }
+    <p></p>
+
+</div>
+
+<script>
+	$(function () {
+
+        if ("@Model.Success") $("#success").show(); else $("#success").hide();
+        if ("@Model.Error") $("#error").show(); else $("#error").hide();
+        $("#UserName").prop("readonly", "@Model.UserId" != "0");
+
+        $("#loading1").hide();
+
+        $("#UserName").focus();
+
+        $("#saveTagProjectUserPermissionButton").click(function (e) {
+			onSaveTagProjectUserPermissionButtonClick(e)
+		});
+	});
+
+    function validateUserName() {
+        return validateRequired("#UserName", "Введите имя пользователя.");
+	}
+
+    function validateSaveTagProjectUserPermissionForm() {
+        if (!validateUserName()) return false;
+		return true;
+	}
+
+    function onSaveTagProjectUserPermissionButtonClick(e) {
+        if (!validateSaveTagProjectUserPermissionForm()) return false;
+		$("#loading1").show();
+        $("#editTagProjectUserPermissionForm").submit();
+	}
+</script>
