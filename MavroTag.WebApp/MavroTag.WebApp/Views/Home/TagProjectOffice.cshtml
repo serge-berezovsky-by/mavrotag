@@ -1,0 +1,41 @@
+﻿@using MavroTag.WebApp.Helpers
+@model MavroTag.WebApp.Models.TagProjectsModel
+
+@{
+    ViewBag.Title = "Tag-проекты с моим участием";
+}
+
+<div>
+
+    <p></p>
+
+    <p class="h5">Tag-проекты с моим участием</p>
+
+    <p></p>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Описание</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var index = 0; index < Model.TagProjects.Count; index++)
+            {
+                <tr>
+                    <td>@Model.TagProjects[index].Id</td>
+                    <td>@Model.TagProjects[index].Name</td>
+                    <td>@Model.TagProjects[index].Description</td>
+                    <td>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p></p>
+
+</div>

@@ -4,36 +4,38 @@
     ViewBag.Title = "Кабинет";
 }
 
-    <div>
+<div>
 
-        <p></p>
+    <p></p>
 
-        <p class="h5">Кабинет</p>
+    <p class="h5">Кабинет</p>
 
-        <p></p>
+    <p></p>
 
-        <p>Добро пожаловать в MavroTag, @AuthHelper.Name!</p>
+    <p>Добро пожаловать в MavroTag, @AuthHelper.Name!</p>
 
-        <p></p>
+    <p></p>
 
-        <br />
+    <br />
 
-        @if (AuthHelper.IsViewUsersPermission)
-        {
-            <p class="h6">Пользователи</p>
+    @if (AuthHelper.IsViewUsersPermission)
+    {
+        <p class="h6">Пользователи</p>
 
-            <p><a class="btn-link" href="@Url.Action("Index", "Users")">Управление пользователями</a></p>
+        <p><a class="btn-link" href="@Url.Action("Index", "Users")">Управление пользователями</a></p>
 
-            <p></p>
-        }
+        <p>&nbsp;</p>
+    }
 
-        @if (AuthHelper.IsMyTagProjectsPermission)
-        {
-            <p class="h6">Tag-проекты</p>
+    <p class="h6">Tag-проекты</p>
 
-            <p><a class="btn-link" href="@Url.Action("Index", "TagProjects")">Мои Tag-проекты</a></p>
+    @if (AuthHelper.IsMyTagProjectsPermission)
+    {
+        <p><a class="btn-link" href="@Url.Action("Index", "TagProjects")">Мои Tag-проекты</a></p>
+    }
 
-            <p></p>
-        }
+    <p><a class="btn-link" href="@Url.Action("TagProjectOffice", "Home")">Tag-проекты с моим участием</a></p>
 
-    </div>
+    <p>&nbsp;</p>
+
+</div>

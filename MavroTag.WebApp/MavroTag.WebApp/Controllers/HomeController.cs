@@ -14,11 +14,16 @@ namespace MavroTag.WebApp.Controllers
     {
         private IUserService _userService;
         private IPermissionService _permissionService;
+        private ITagProjectUserPermissionService _tagProjectUserPermissionService;
+        private ITagProjectService _tagProjectService;
 
-        public HomeController(IUserService userService, IPermissionService permissionService)
+        public HomeController(IUserService userService, IPermissionService permissionService,
+            ITagProjectUserPermissionService tagProjectUserPermissionService, ITagProjectService tagProjectService)
         {
             _userService = userService;
             _permissionService = permissionService;
+            _tagProjectUserPermissionService = tagProjectUserPermissionService;
+            _tagProjectService = tagProjectService;
         }
 
         public ActionResult Index()
@@ -98,6 +103,21 @@ namespace MavroTag.WebApp.Controllers
         public ActionResult Office()
         {
             return View();
+        }
+
+        public ActionResult TagProjectOffice()
+        {
+            var tagProjectIds = _tagProjectUserPermissionService.GetAll().Where(c => c.UserId == AuthHelper.UserId)
+                .Select(c => c.TagProjectId).Distinct().ToList();
+
+            var tagProjects = _tagProjectService.GetAll().Where(c => tagProjectIds.Contains(c.Id)).ToList();
+
+            var model = new TagProjectsModel()
+            {
+                TagProjects = tagProjects.Select(c => TagProjectModel.FromTagProject(c)).ToList()
+            };
+
+            return View(model);
         }
     }
 }
