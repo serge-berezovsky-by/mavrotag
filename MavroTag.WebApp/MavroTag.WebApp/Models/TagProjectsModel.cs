@@ -8,5 +8,6 @@ namespace MavroTag.WebApp.Models
 	public class TagProjectsModel
 	{
 		public List<TagProjectModel> TagProjects { get; set; }
+		public List<TagProjectUserPermissionModel> TagProjectUserPermissions { get; set; }
 	}
 }

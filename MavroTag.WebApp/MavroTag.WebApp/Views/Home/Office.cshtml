@@ -16,26 +16,28 @@
 
     <p></p>
 
-    <br />
-
     @if (AuthHelper.IsViewUsersPermission)
     {
         <p class="h6">Пользователи</p>
 
-        <p><a class="btn-link" href="@Url.Action("Index", "Users")">Управление пользователями</a></p>
+        <a class="btn-link" href="@Url.Action("Index", "Users")">Управление пользователями</a>
 
-        <p>&nbsp;</p>
+        <br />
+
+        <br />
     }
 
     <p class="h6">Tag-проекты</p>
 
     @if (AuthHelper.IsMyTagProjectsPermission)
     {
-        <p><a class="btn-link" href="@Url.Action("Index", "TagProjects")">Мои Tag-проекты</a></p>
+        <a class="btn-link" href="@Url.Action("Index", "TagProjects")">Мои Tag-проекты</a>
+
+        <br />
     }
 
-    <p><a class="btn-link" href="@Url.Action("TagProjectOffice", "Home")">Tag-проекты с моим участием</a></p>
+    <a class="btn-link" href="@Url.Action("TagProjectOffice", "Home")">Tag-проекты с моим участием</a>
 
-    <p>&nbsp;</p>
+    <br />
 
 </div>

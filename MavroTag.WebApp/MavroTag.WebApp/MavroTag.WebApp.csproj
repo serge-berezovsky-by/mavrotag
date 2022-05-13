@@ -139,6 +139,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\TagProjectCategoriesController.cs" />
     <Compile Include="Controllers\TagProjectUserPermissionsController.cs" />
     <Compile Include="Controllers\TagProjectsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -150,7 +151,9 @@
     <Compile Include="Helpers\AuthHelper.cs" />
     <Compile Include="Mapping\MappingProfile.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\TagProjectCategoriesModel.cs" />
     <Compile Include="Models\TagProjectModel.cs" />
+    <Compile Include="Models\TagProjectCategoryModel.cs" />
     <Compile Include="Models\TagProjectUserPermissionModel.cs" />
     <Compile Include="Models\TagProjectUserPermissionsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -213,6 +216,7 @@
     <Content Include="Views\TagProjectUserPermissions\Edit.cshtml" />
     <Content Include="Views\TagProjectUserPermissions\Delete.cshtml" />
     <Content Include="Views\Home\TagProjectOffice.cshtml" />
+    <Content Include="Views\TagProjectCategories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

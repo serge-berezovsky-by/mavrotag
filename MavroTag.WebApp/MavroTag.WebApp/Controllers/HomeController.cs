@@ -107,15 +107,28 @@ namespace MavroTag.WebApp.Controllers
 
         public ActionResult TagProjectOffice()
         {
-            var tagProjectIds = _tagProjectUserPermissionService.GetAll().Where(c => c.UserId == AuthHelper.UserId)
-                .Select(c => c.TagProjectId).Distinct().ToList();
+            var tagProjectUserPermissions = _tagProjectUserPermissionService.GetAll().Where(c => c.UserId == AuthHelper.UserId).ToList();
+
+            var tagProjectIds = tagProjectUserPermissions.Select(c => c.TagProjectId).Distinct().ToList();
 
             var tagProjects = _tagProjectService.GetAll().Where(c => tagProjectIds.Contains(c.Id)).ToList();
 
             var model = new TagProjectsModel()
             {
-                TagProjects = tagProjects.Select(c => TagProjectModel.FromTagProject(c)).ToList()
+                TagProjects = tagProjects.Select(c => TagProjectModel.FromTagProject(c)).ToList(),
+                TagProjectUserPermissions = new List<TagProjectUserPermissionModel>()
             };
+
+            foreach (var tagProjectModel in model.TagProjects)
+            {
+                var tagProjectUserPermissionModel = TagProjectUserPermissionModel
+                    .FromTagProjectUserPermissions(
+                        AuthHelper.User, tagProjectUserPermissions.Where(c => c.TagProjectId == tagProjectModel.Id).ToList()
+                    );
+                tagProjectUserPermissionModel.TagProjectId = tagProjectModel.Id;
+
+                model.TagProjectUserPermissions.Add(tagProjectUserPermissionModel);
+            }
 
             return View(model);
         }

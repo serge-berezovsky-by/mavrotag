@@ -36,5 +36,10 @@ namespace MavroTag.WebApp.Models
             };
             PermissionNames = Permissions.ToDictionary(c => c.Key, c => c.Key);
         }
+
+        public bool Contains(TagProjectPermissions tagProjectPermissions)
+        {
+            return SelectedPermissions.Contains(tagProjectPermissions.ToString());
+        }
     }
 }

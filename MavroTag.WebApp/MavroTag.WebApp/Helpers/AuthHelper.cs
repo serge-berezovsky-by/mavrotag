@@ -31,6 +31,8 @@ namespace MavroTag.WebApp.Helpers
 
         public static bool IsMyTagProjectsPermission => GetUser()?.HasPermission(Permissions.MyTagProjects) == true;
 
+        public static User User => GetUser();
+
         public static void Login(User user)
         {
             FormsAuthentication.SetAuthCookie(user.Name, false);
