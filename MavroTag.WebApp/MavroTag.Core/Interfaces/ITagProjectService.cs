@@ -10,8 +10,8 @@ namespace MavroTag.Core.Interfaces
     public interface ITagProjectService
     {
         IEnumerable<TagProject> GetAll();
-        void Update(TagProject user);
-        TagProject Add(TagProject user);
+        void Update(TagProject tagProject);
+        TagProject Add(TagProject tagProject);
         TagProject GetById(long id);
         void Delete(long id);
     }

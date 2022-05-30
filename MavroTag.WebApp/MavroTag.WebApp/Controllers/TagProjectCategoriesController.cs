@@ -18,23 +18,22 @@ namespace MavroTag.WebApp.Controllers
         ITagProjectService _tagProjectService;
         ITagProjectUserPermissionService _tagProjectUserPermissionService;
         IUserService _userService;
+        ITagProjectCategoryService _tagProjectCategoryService;
 
         public TagProjectCategoriesController(ITagProjectService tagProjectService,
             ITagProjectUserPermissionService tagProjectUserPermissionService,
-            IUserService userService)
+            IUserService userService,
+            ITagProjectCategoryService tagProjectCategoryService)
         {
             _tagProjectService = tagProjectService;
             _tagProjectUserPermissionService = tagProjectUserPermissionService;
             _userService = userService;
+            _tagProjectCategoryService = tagProjectCategoryService;
         }
 
         public ActionResult Index(long tagProjectId)
         {
             CheckPermissions(tagProjectId, out var tagProject);
-
-            var tagProjectUserPermissions = _tagProjectUserPermissionService.GetAll()
-                .Where(c => c.TagProjectId == tagProjectId)
-                .ToList();
 
             var model = new TagProjectCategoriesModel()
             {
@@ -43,9 +42,100 @@ namespace MavroTag.WebApp.Controllers
                 TagProjectCategories = new List<TagProjectCategoryModel>()
             };
 
-            // TODO: get categories
+            model.TagProjectCategories = _tagProjectCategoryService.GetAll().Select(c => TagProjectCategoryModel.FromTagProjectCategory(c)).ToList();
+
+            // TODO: text count
 
             return View(model);
+        }
+
+        public ActionResult Add(long tagProjectId)
+        {
+            CheckPermissions(tagProjectId, out var tagProject);
+
+            var tagProjectCategory = new TagProjectCategory()
+            {
+                Id = 0,
+                Name = string.Empty,
+                Description = string.Empty,
+                TagProjectId = tagProjectId
+            };
+
+            var model = TagProjectCategoryModel.FromTagProjectCategory(tagProjectCategory);
+
+            return View("Edit", model);
+        }
+
+        public ActionResult Edit(long id)
+        {
+            var tagProjectCategory = _tagProjectCategoryService.GetById(id);
+            CheckPermissions(tagProjectCategory.TagProjectId, out var tagProject);
+
+            var model = TagProjectCategoryModel.FromTagProjectCategory(tagProjectCategory);
+
+            return View("Edit", model);
+        }
+
+        public ActionResult Save(TagProjectCategoryModel model)
+        {
+            CheckPermissions(model.TagProjectId, out var tagProject);
+
+            try
+            {
+                ValidateTagProjectCategoryModel(model);
+                ModelState.Clear();
+
+                if (model.Id == 0)
+                {
+                    var tagProjectCategory = TagProjectCategoryModel.ToTagProjectCategory(model, null);
+                    tagProjectCategory.AddedDateTime = DateTime.Now.ToUniversalTime();
+                    tagProjectCategory = _tagProjectCategoryService.Add(tagProjectCategory);
+                    model = TagProjectCategoryModel.FromTagProjectCategory(tagProjectCategory);
+                    model.Success = "Категория добавлена.";
+                }
+                else
+                {
+                    var tagProjectCategory = _tagProjectCategoryService.GetById(model.Id);
+                    tagProjectCategory = TagProjectCategoryModel.ToTagProjectCategory(model, tagProjectCategory);
+                    _tagProjectCategoryService.Update(tagProjectCategory);
+                    tagProjectCategory = _tagProjectCategoryService.GetById(model.Id);
+                    model = TagProjectCategoryModel.FromTagProjectCategory(tagProjectCategory);
+                    model.Success = "Категория сохранена.";
+                }
+
+                return View("Edit", model);
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Save", e);
+                model.Error = e.Message;
+                return View("Edit", model);
+            }
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var tagProjectCategory = _tagProjectCategoryService.GetById(id);
+            CheckPermissions(tagProjectCategory.TagProjectId, out var tagProject);
+
+            var model = new TagProjectCategoryModel();
+
+            try
+            {
+                model = TagProjectCategoryModel.FromTagProjectCategory(tagProjectCategory);
+
+                _tagProjectCategoryService.Delete(id);
+
+                model.Success = $"Категория {model.Name} удалена.";
+
+                return View("Delete", model);
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Delete", e);
+                model.Error = e.Message;
+                return View("Delete", model);
+            }
         }
 
         private void CheckPermissions(long tagProjectId, out TagProject tagProject)
@@ -59,6 +149,11 @@ namespace MavroTag.WebApp.Controllers
                 .Contains(TagProjectPermissions.ManageTexts)) AuthHelper.LogoutAndRedirect();
 
             tagProject = _tagProjectService.GetById(tagProjectId);
+        }
+
+        private void ValidateTagProjectCategoryModel(TagProjectCategoryModel model)
+        {
+            if (string.IsNullOrWhiteSpace(model.Name)) throw new Exception("Введите имя.");
         }
     }
 }

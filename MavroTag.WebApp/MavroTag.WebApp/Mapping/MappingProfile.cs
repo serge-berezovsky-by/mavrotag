@@ -24,6 +24,11 @@ namespace MavroTag.WebApp.Mapping
             CreateMap<TagProjectModel, TagProject>()
                 .ForMember(c => c.UserId, c => c.Ignore())
                 .ForMember(c => c.AddedDateTime, c => c.Ignore());
+
+            CreateMap<TagProjectCategory , TagProjectCategoryModel>();
+
+            CreateMap<TagProjectCategoryModel, TagProjectCategory>()
+                .ForMember(c => c.AddedDateTime, c => c.Ignore());
         }
     }
 }

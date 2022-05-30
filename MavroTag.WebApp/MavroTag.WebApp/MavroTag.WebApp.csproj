@@ -217,6 +217,8 @@
     <Content Include="Views\TagProjectUserPermissions\Delete.cshtml" />
     <Content Include="Views\Home\TagProjectOffice.cshtml" />
     <Content Include="Views\TagProjectCategories\Index.cshtml" />
+    <Content Include="Views\TagProjectCategories\Edit.cshtml" />
+    <Content Include="Views\TagProjectCategories\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

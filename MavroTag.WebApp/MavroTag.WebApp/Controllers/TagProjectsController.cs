@@ -120,7 +120,7 @@ namespace MavroTag.WebApp.Controllers
 
                 _tagProjectService.Delete(id);
 
-                model.Success = $"Tag-проект {model.Name} удалён";
+                model.Success = $"Tag-проект {model.Name} удалён.";
 
                 return View("Delete", model);
             }

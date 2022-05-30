@@ -1,0 +1,71 @@
+﻿@using MavroTag.WebApp.Helpers
+@model MavroTag.WebApp.Models.TagProjectCategoryModel
+
+@{
+    ViewBag.Title = "Редактирование категории текста";
+}
+
+<div>
+
+    <p></p>
+
+    <p class="h5">Редактирование категории текста Tag-проекта</p>
+
+    <p></p>
+
+    @using (Html.BeginForm("Save", "TagProjectCategories", FormMethod.Post, new { id = "editTagProjectCategoryForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.HiddenFor(c => c.Id)
+            @Html.HiddenFor(c => c.TagProjectId)
+            <div id="success" class="alert alert-success" role="alert" style="display: none;">@Model.Success</div>
+            <div id="error" class="alert alert-danger" role="alert" style="display: none;">@Model.Error</div>
+            <label for="Name">Введите имя</label>
+            @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+            <br />
+            <label for="Description">Введите описание</label>
+            @Html.TextBoxFor(c => c.Description, new { @class = "form-control" })
+        </div>
+        <br />
+        <div class="d-flex align-items-center">
+            <button type="button" id="saveTagProjectCategoryButton" class="btn btn-primary">
+                <span id="loading1" class="spinner-border spinner-border-sm"></span>
+                Сохранить
+            </button>
+        </div>
+    }
+    <p></p>
+
+</div>
+
+<script>
+	$(function () {
+
+        if ("@Model.Success") $("#success").show(); else $("#success").hide();
+		if ("@Model.Error") $("#error").show(); else $("#error").hide();
+
+        $("#loading1").hide();
+
+        $("#Name").focus();
+
+        $("#saveTagProjectCategoryButton").click(function (e) {
+			onSaveTagProjectCategoryButtonClick(e)
+		});
+	});
+
+	function validateName() {
+		return validateRequired("#Name", "Введите имя.");
+	}
+
+    function validateSaveTagProjectCategoryForm() {
+		if (!validateName()) return false;
+		return true;
+	}
+
+    function onSaveTagProjectCategoryButtonClick(e) {
+        if (!validateSaveTagProjectCategoryForm()) return false;
+		$("#loading1").show();
+        $("#editTagProjectCategoryForm").submit();
+	}
+</script>
