@@ -39,10 +39,6 @@
                         {
                             <a class="btn-link" href="@Url.Action("Index", "TagProjectTags", new { tagProjectId = Model.TagProjects[index].Id})">Теги</a>
                         }
-                        @if (Model.TagProjectUserPermissions[index].Contains(TagProjectPermissions.ManageParagraphTags))
-                        {
-                            <a class="btn-link" href="@Url.Action("Index", "TagProjectParagraphTags", new { tagProjectId = Model.TagProjects[index].Id})">Параграфы</a>
-                        }
                     </td>
                 </tr>
             }

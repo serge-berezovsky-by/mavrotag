@@ -66,6 +66,7 @@
     <Compile Include="Domain\BaseEntity.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\TagProject.cs" />
+    <Compile Include="Domain\TagProjectText.cs" />
     <Compile Include="Domain\TagProjectCategory.cs" />
     <Compile Include="Domain\TagProjectUserPermission.cs" />
     <Compile Include="Domain\User.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Enums\Permissions.cs" />
     <Compile Include="Helper\Strings.cs" />
     <Compile Include="Interfaces\IPermissionService.cs" />
+    <Compile Include="Interfaces\ITagProjectTextService.cs" />
     <Compile Include="Interfaces\ITagProjectCategoryService.cs" />
     <Compile Include="Interfaces\ITagProjectUserPermissionService.cs" />
     <Compile Include="Interfaces\ITagProjectService.cs" />
@@ -98,20 +100,27 @@
     <Compile Include="Migrations\202205301840049_TagProjectCategory1.designer.cs">
       <DependentUpon>202205301840049_TagProjectCategory1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207021954250_Texts.cs" />
+    <Compile Include="Migrations\202207021954250_Texts.designer.cs">
+      <DependentUpon>202207021954250_Texts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\IPermissionRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\ITagProjectTextRepository.cs" />
     <Compile Include="Repositories\ITagProjectCategoryRepository.cs" />
     <Compile Include="Repositories\ITagProjectUserPermissionRepository.cs" />
     <Compile Include="Repositories\ITagProjectRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\PermissionRepository.cs" />
+    <Compile Include="Repositories\TagProjectTextRepository.cs" />
     <Compile Include="Repositories\TagProjectCategoryRepository.cs" />
     <Compile Include="Repositories\TagProjectUserPermissionRepository.cs" />
     <Compile Include="Repositories\TagProjectRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\PermissionService.cs" />
+    <Compile Include="Services\TagProjectTextService.cs" />
     <Compile Include="Services\TagProjectCategoryService.cs" />
     <Compile Include="Services\TagProjectUserPermissionService.cs" />
     <Compile Include="Services\TagProjectService.cs" />
@@ -137,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202205301840049_TagProjectCategory1.resx">
       <DependentUpon>202205301840049_TagProjectCategory1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207021954250_Texts.resx">
+      <DependentUpon>202207021954250_Texts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

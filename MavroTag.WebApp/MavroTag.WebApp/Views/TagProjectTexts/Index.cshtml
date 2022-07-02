@@ -1,0 +1,55 @@
+﻿@using MavroTag.WebApp.Helpers
+@model MavroTag.WebApp.Models.TagProjectTextsModel
+
+@{
+    ViewBag.Title = "Тексты Tag-проекта";
+}
+
+<div>
+
+    <p></p>
+
+    <p class="h5">Тексты Tag-проекта @Model.TagProjectName в категории @Model.TagProjectCategoryName</p>
+
+    <p></p>
+    @Html.HiddenFor(c => c.TagProjectId)
+    @Html.HiddenFor(c => c.TagProjectCategoryId)
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Имя</th>
+                <th scope="col">Описание</th>
+                <th scope="col">Добавлен</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var index = 0; index < Model.TagProjectTexts.Count; index++)
+            {
+                <tr>
+                    <td>@Model.TagProjectTexts[index].Name</td>
+                    <td>@Model.TagProjectTexts[index].Description</td>
+                    <td>@Model.TagProjectTexts[index].AddedDateTime.ToShortDateString() @Model.TagProjectTexts[index].AddedDateTime.ToShortTimeString()</td>
+                    <td>
+                        <a class="btn-link" href="@Url.Action("Edit", "TagProjectTexts", new { id = Model.TagProjectTexts[index].Id })">Редактировать</a>
+                        <a class="btn-link delete" href="@Url.Action("Delete", "TagProjectTexts", new { id = Model.TagProjectTexts[index].Id })">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p></p>
+
+</div>
+
+<script>
+    $(function () {
+        $(".delete").click(function (event) {
+            if (!confirm("Удалить текст?")) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>

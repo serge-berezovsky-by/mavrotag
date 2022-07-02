@@ -27,6 +27,8 @@ namespace MavroTag.Core.Data
 
 		public DbSet<Domain.TagProjectCategory> TagProjectCategories { get; set; }
 
+		public DbSet<Domain.TagProjectText> TagProjectTexts { get; set; }
+
 		public new DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
 		{
 			return base.Set<TEntity>();
