@@ -53,6 +53,96 @@ namespace MavroTag.WebApp.Controllers
             return View(model);
         }
 
+        public ActionResult Add(long tagProjectCategoryId)
+        {
+            CheckPermissions(tagProjectCategoryId, out var tagProjectCategory, out var tagProject);
+
+            var tagProjectText = new TagProjectText()
+            {
+                Id = 0,
+                TagProjectCategoryId = tagProjectCategoryId,
+                Name = string.Empty,
+                Description = string.Empty,
+                Content = string.Empty
+            };
+
+            var model = TagProjectTextModel.FromTagProjectText(tagProjectText);
+
+            return View("Edit", model);
+        }
+
+        public ActionResult Edit(long id)
+        {
+            var tagProjectText = _tagProjectTextService.GetById(id);
+            CheckPermissions(tagProjectText.TagProjectCategoryId, out var tagProjectCategory, out var tagProject);
+
+            var model = TagProjectTextModel.FromTagProjectText(tagProjectText);
+
+            return View("Edit", model);
+        }
+
+        public ActionResult Save(TagProjectTextModel model)
+        {
+            CheckPermissions(model.TagProjectCategoryId, out var tagProjectCategory, out var tagProject);
+
+            try
+            {
+                ValidateTagProjectTextModel(model);
+                ModelState.Clear();
+
+                if (model.Id == 0)
+                {
+                    var tagProjectText = TagProjectTextModel.ToTagProjectText(model, null);
+                    tagProjectText.AddedDateTime = DateTime.Now.ToUniversalTime();
+                    tagProjectText = _tagProjectTextService.Add(tagProjectText);
+                    model = TagProjectTextModel.FromTagProjectText(tagProjectText);
+                    model.Success = "Текст добавлен.";
+                }
+                else
+                {
+                    var tagProjectText = _tagProjectTextService.GetById(model.Id);
+                    tagProjectText = TagProjectTextModel.ToTagProjectText(model, tagProjectText);
+                    _tagProjectTextService.Update(tagProjectText);
+                    tagProjectText = _tagProjectTextService.GetById(model.Id);
+                    model = TagProjectTextModel.FromTagProjectText(tagProjectText);
+                    model.Success = "Текст сохранён.";
+                }
+
+                return View("Edit", model);
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Save", e);
+                model.Error = e.Message;
+                return View("Edit", model);
+            }
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var tagProjectText = _tagProjectTextService.GetById(id);
+            CheckPermissions(tagProjectText.TagProjectCategoryId, out var tagProjectCategory, out var tagProject);
+
+            var model = new TagProjectTextModel();
+
+            try
+            {
+                model = TagProjectTextModel.FromTagProjectText(tagProjectText);
+
+                _tagProjectTextService.Delete(id);
+
+                model.Success = $"Текст {model.Name} удалён.";
+
+                return View("Delete", model);
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Delete", e);
+                model.Error = e.Message;
+                return View("Delete", model);
+            }
+        }
+
         private void CheckPermissions(long tagProjectCategoryId, out TagProjectCategory tagProjectCategory, out TagProject tagProject)
         {
             tagProjectCategory = _tagProjectCategoryService.GetById(tagProjectCategoryId);
@@ -69,6 +159,12 @@ namespace MavroTag.WebApp.Controllers
                 .Contains(TagProjectPermissions.ManageTexts)) AuthHelper.LogoutAndRedirect();
 
             tagProject = _tagProjectService.GetById(tagProjectId);
+        }
+
+        private void ValidateTagProjectTextModel(TagProjectTextModel model)
+        {
+            if (string.IsNullOrWhiteSpace(model.Name)) throw new Exception("Введите имя.");
+            if (string.IsNullOrWhiteSpace(model.Content)) throw new Exception("Введите текст.");
         }
     }
 }

@@ -19,16 +19,19 @@ namespace MavroTag.WebApp.Controllers
         ITagProjectUserPermissionService _tagProjectUserPermissionService;
         IUserService _userService;
         ITagProjectCategoryService _tagProjectCategoryService;
+        ITagProjectTextService _tagProjectTextService;
 
         public TagProjectCategoriesController(ITagProjectService tagProjectService,
             ITagProjectUserPermissionService tagProjectUserPermissionService,
             IUserService userService,
-            ITagProjectCategoryService tagProjectCategoryService)
+            ITagProjectCategoryService tagProjectCategoryService,
+            ITagProjectTextService tagProjectTextService)
         {
             _tagProjectService = tagProjectService;
             _tagProjectUserPermissionService = tagProjectUserPermissionService;
             _userService = userService;
             _tagProjectCategoryService = tagProjectCategoryService;
+            _tagProjectTextService = tagProjectTextService;
         }
 
         public ActionResult Index(long tagProjectId)
@@ -44,7 +47,10 @@ namespace MavroTag.WebApp.Controllers
 
             model.TagProjectCategories = _tagProjectCategoryService.GetAll().Select(c => TagProjectCategoryModel.FromTagProjectCategory(c)).ToList();
 
-            // TODO: text count
+            foreach(var tagProjectCategory in model.TagProjectCategories)
+            {
+                tagProjectCategory.TextCount = _tagProjectTextService.GetByCategoryId(tagProjectCategory.Id).Count();
+            };
 
             return View(model);
         }

@@ -1,0 +1,79 @@
+﻿@using MavroTag.WebApp.Helpers
+@model MavroTag.WebApp.Models.TagProjectTextModel
+
+@{
+    ViewBag.Title = "Редактирование текста";
+}
+
+<div>
+
+    <p></p>
+
+    <p class="h5">Редактирование текста Tag-проекта</p>
+
+    <p></p>
+
+    @using (Html.BeginForm("Save", "TagProjectTexts", FormMethod.Post, new { id = "editTagProjectTextForm" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.HiddenFor(c => c.Id)
+            @Html.HiddenFor(c => c.TagProjectCategoryId)
+            <div id="success" class="alert alert-success" role="alert" style="display: none;">@Model.Success</div>
+            <div id="error" class="alert alert-danger" role="alert" style="display: none;">@Model.Error</div>
+            <label for="Name">Введите имя</label>
+            @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+            <br />
+            <label for="Description">Введите описание</label>
+            @Html.TextBoxFor(c => c.Description, new { @class = "form-control" })
+            <br />
+            <label for="Content">Введите текст</label>
+            @Html.TextAreaFor(c => c.Content, new { @class = "form-control min-width-80" })
+        </div>
+        <br />
+        <div class="d-flex align-items-center">
+            <button type="button" id="saveTagProjectTextButton" class="btn btn-primary">
+                <span id="loading1" class="spinner-border spinner-border-sm"></span>
+                Сохранить
+            </button>
+        </div>
+    }
+    <p></p>
+
+</div>
+
+<script>
+	$(function () {
+
+        if ("@Model.Success") $("#success").show(); else $("#success").hide();
+		if ("@Model.Error") $("#error").show(); else $("#error").hide();
+
+        $("#loading1").hide();
+
+        $("#Name").focus();
+
+        $("#saveTagProjectTextButton").click(function (e) {
+			onSaveTagProjectTextButtonClick(e)
+		});
+	});
+
+	function validateName() {
+		return validateRequired("#Name", "Введите имя.");
+	}
+
+    function validateContent() {
+        return validateRequired("#Content", "Введите текст.");
+    }
+
+    function validateSaveTagProjectTextForm() {
+		if (!validateName()) return false;
+        if (!validateContent()) return false;
+		return true;
+	}
+
+    function onSaveTagProjectTextButtonClick(e) {
+        if (!validateSaveTagProjectTextForm()) return false;
+		$("#loading1").show();
+        $("#editTagProjectTextForm").submit();
+	}
+</script>

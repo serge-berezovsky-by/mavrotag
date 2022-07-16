@@ -12,6 +12,10 @@
     <p class="h5">Тексты Tag-проекта @Model.TagProjectName в категории @Model.TagProjectCategoryName</p>
 
     <p></p>
+
+    <p><a class="btn-link" href="@Url.Action("Add", "TagProjectTexts", new { tagProjectCategoryId = Model.TagProjectCategoryId })">Добавить текст</a></p>
+
+    <p></p>
     @Html.HiddenFor(c => c.TagProjectId)
     @Html.HiddenFor(c => c.TagProjectCategoryId)
 

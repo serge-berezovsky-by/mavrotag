@@ -4,6 +4,7 @@ using MavroTag.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace MavroTag.WebApp.Models
 {
@@ -14,6 +15,7 @@ namespace MavroTag.WebApp.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime AddedDateTime { get; set; }
+        [AllowHtml]
         public string Content { get; set; }
 
         public static TagProjectTextModel FromTagProjectText(TagProjectText tagProjectText)
